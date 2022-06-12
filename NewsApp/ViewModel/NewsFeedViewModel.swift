@@ -14,8 +14,8 @@ class NewsFeedViewModel {
     func getNewsFeed() {
         if let delegate = delegate {
             delegate.startLoader()
+            // API url
             let url = ApiUrl.API_URL + Constant.API_KEY
-            print(url)
             var request = URLRequest(url: URL(string: url)!)
             request.httpMethod = "GET"
             

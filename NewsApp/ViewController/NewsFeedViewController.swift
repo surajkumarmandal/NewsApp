@@ -26,9 +26,12 @@ class NewsFeedViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // Check for internet connection
         if Reachability.isConnectedToNetwork() {
+            // Call get news feed API
             viewModel.getNewsFeed()
         } else {
+            // Show alert if internet is not available
             Alert.showInternetFailureAlert(on: self)
         }
         
@@ -45,6 +48,8 @@ class NewsFeedViewController: UIViewController {
     */
 
 }
+
+// MARK: - Table view delegate and datasource functions
 
 extension NewsFeedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,6 +103,7 @@ extension NewsFeedViewController: NewsFeedProtocol {
     
     func loadData(data: NewsFeedModel?) {
         self.newsModel = data
+        // Stop loader and reload table view in main thread
         DispatchQueue.main.async {
             self.stopLoader()
             self.newsListTableView.reloadData()
